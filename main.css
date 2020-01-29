@@ -1,7 +1,11 @@
-.row{
-    display: flex;
+
+#board{
+    display: grid;
+    grid-template-columns:  90px 90px 90px 90px;
+    grid-template-rows:  90px 90px 90px 90px;
 }
 
 .block{
-    padding: 5px;
+    text-align: center;
+    font-size: 42px;
 }

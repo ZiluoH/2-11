@@ -1,10 +1,14 @@
-
+// ---------------------Setup Board------------//
 class Board {
     constructor(){
         this.board = [[0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]];
+                      [0, 0, 0, 0],
+                      [0, 0, 0, 0],
+                      [0, 0, 0, 0]];
+        this.moved = false;
+        this.gameOver = false;
+        this.totalScore = 0;
+        this.currentScore = 0;
     }
     
     initialBoard(){
@@ -31,75 +35,172 @@ class Board {
 
         const mainBoard = document.getElementById("board");
         for (let i = 0; i < 4; i++) {
-            const rowDiv = document.createElement("div");
-            rowDiv.className = 'row';
             for (let j = 0; j < 4; j++) {
                 const block = document.createElement("div");
                 block.setAttribute('id', i.toString()+j.toString());
                 block.setAttribute("class", "block");
 
                 block.appendChild(document.createTextNode(this.board[i][j] == 0 ? "_" : this.board[i][j]));
-                rowDiv.appendChild(block);
-            } 
-            mainBoard.appendChild(rowDiv);     
+                mainBoard.appendChild(block);
+            }     
         }
     }
 
     //generate block at random empty spot
     generateBlock(){
-        if (!this.board.flat().includes(0)){
-            console.log("Game over");
-        } else {
-            let done = false;
-            while (!done) {
-                let row = Math.floor((Math.random() * 4));
-                let col = Math.floor((Math.random() * 4));
-                if (this.board[row][col] == 0) {
-                    if (Math.random() < 0.9) {
-                        this.board[row][col] = 2;
-                    }
-                    else {
-                        this.board[row][col] = 4;
-                    }
-                    done = true;
+        let done = false;
+        while (!done) {
+            let row = Math.floor((Math.random() * 4));
+            let col = Math.floor((Math.random() * 4));
+            if (this.board[row][col] == 0) {
+                if (Math.random() < 0.9) {
+                    this.board[row][col] = 2;
                 }
+                else {
+                    this.board[row][col] = 4;
+                }
+                done = true;
             }
         }
+
+        if (!this.availableSpace() && !this.availableMatch()){
+            this.gameOver = true;
+            console.log("game over");
+            
+        };
+        
     }
 
+    // ----------------game over validation -------//
+    availableSpace(){
+        return this.board.flat().includes(0);
+    }
+
+    availableMatch(){
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 3; j++) {
+               if (this.board[i][j] == this.board[i][j+1] || this.board[j][i] == this.board[j+1][i]){
+                    return true;
+               }
+            }
+        }
+        return false
+    }
+
+    //------------------ core action -------------//
     mergeRight(){
         for (let i = 0; i < 4; i++) {
-            let row = this.board[i];
-            row = row.filter(num => num != 0);
-            this.board[i] = Array(4 - row.length).fill(0).concat(row);
-
+            let originRow = this.board[i];
+            let newRow = originRow.filter(num => num != 0);
+            this.board[i] = Array(4 - newRow.length).fill(0).concat(newRow);
+            
             // merge number
             for (let j = 3; j > 0; j--) {
                 if(this.board[i][j] == this.board[i][j-1]){
                     this.board[i][j] = this.board[i][j] * 2;
+                    // update score for each move
+                    this.totalScore += this.board[i][j];
+                    this.currentScore += this.board[i][j];
                     this.board[i][j - 1] = 0;
                 }
             }
-            row = this.board[i];
+            // move right again
+            let row = this.board[i];
             row = row.filter(num => num != 0);
             this.board[i] = Array(4 - row.length).fill(0).concat(row);
 
+            // check if moved
+            if (JSON.stringify(originRow)!= JSON.stringify(this.board[i]) ){
+                this.moved = true
+            }
         }
 
-        this.generateBlock();
-        console.log(this.board);
-        
+        if(this.moved){
+            this.generateBlock();
+            // reset currnt turn score
+            this.currentScore = 0;
+            // reset moved
+            this.moved = false;
+        }
     }
 
+    // helper function rotate the board
+    rotateBoard(){//rotate board conter clockwise
+        this.board = this.board.map((col, i) => this.board.map(row => row[3 - i]));
+    }
+
+    keyLeft(){
+        this.rotateBoard();this.rotateBoard();
+        this.mergeRight();
+        this.rotateBoard(); this.rotateBoard();
+    }
+    
+    keyUp(){
+        this.rotateBoard(); this.rotateBoard(); this.rotateBoard();
+        this.mergeRight();
+        this.rotateBoard();
+    }
+    
+    keyDown(){
+        this.rotateBoard();
+        this.mergeRight();
+        this.rotateBoard();this.rotateBoard();this.rotateBoard();
+    }
 
 }
 
 
-const newBoard = new Board();
+
+// ---------------Move ---------------------- //
+window.addEventListener('keydown', function(e) {
+    switch (e.keyCode) {
+        case 39: //arrow right
+            board.mergeRight();
+            rerenderBoard();
+            break;
+        case 37: //arrow left
+            board.keyLeft();
+            rerenderBoard();
+            break;
+        case 38: //arrow up
+            board.keyUp();
+            rerenderBoard();
+            break;
+        case 40: //arrow down
+            board.keyDown();
+            rerenderBoard();
+            break;
+    }
+
+});
+
+
+
+
+// ---------------- rerender board -------------- //
+function rerenderBoard(){
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (board.board[i][j] == 0) {
+                document.getElementById(i.toString() + j.toString()).innerHTML = "_";
+            } else {
+                document.getElementById(i.toString() + j.toString()).innerHTML = board.board[i][j];
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+const board = new Board();
 window.addEventListener('DOMContentLoaded', () => {
-    newBoard.initialBoard();
+    board.initialBoard();
 })
 
-window.newBoard = newBoard;
+window.board = board;
 
 
