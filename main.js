@@ -9,6 +9,7 @@ class Board {
         this.gameOver = false;
         this.totalScore = 0;
         this.currentScore = 0;
+        this.highestScore = 0;
     }
     
     initialBoard(){
@@ -40,11 +41,36 @@ class Board {
                 block.setAttribute('id', i.toString()+j.toString());
                 block.setAttribute("class", "block");
 
-                block.appendChild(document.createTextNode(this.board[i][j] == 0 ? "_" : this.board[i][j]));
+                block.appendChild(document.createTextNode(this.board[i][j] == 0 ? "" : this.board[i][j]));
                 mainBoard.appendChild(block);
             }     
         }
+        rerenderBoard();
     }
+
+    restart(){
+        this.board = [[0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]];
+        this.moved = false;
+        this.gameOver = false;
+        this.totalScore = 0;
+        this.currentScore = 0;
+        this.generateBlock();
+        this.generateBlock();
+        rerenderBoard();
+    }
+
+    // test need to remove
+    test(){
+        this.board = [[0, 2, 4, 8],
+        [16, 32, 64, 128],
+        [256, 512, 1024, 2048],
+        [16, 0, 32, 0]];
+        rerenderBoard();
+    }
+
 
     //generate block at random empty spot
     generateBlock(){
@@ -62,11 +88,11 @@ class Board {
                 done = true;
             }
         }
-
+        
+        
         if (!this.availableSpace() && !this.availableMatch()){
             this.gameOver = true;
             console.log("game over");
-            
         };
         
     }
@@ -181,10 +207,14 @@ window.addEventListener('keydown', function(e) {
 function rerenderBoard(){
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
-            if (board.board[i][j] == 0) {
-                document.getElementById(i.toString() + j.toString()).innerHTML = "_";
+            let block = document.getElementById(i.toString() + j.toString());
+            let val = board.board[i][j];
+            if (val == 0) {
+                block.innerHTML = "";
+                block.className = 'block block-0';
             } else {
-                document.getElementById(i.toString() + j.toString()).innerHTML = board.board[i][j];
+                block.innerHTML = val;
+                block.className = `block block-${val}`;
             }
         }
     }
@@ -195,12 +225,10 @@ function rerenderBoard(){
 
 
 
-
-const board = new Board();
+let board = new Board();
 window.addEventListener('DOMContentLoaded', () => {
     board.initialBoard();
 })
 
 window.board = board;
-
 
