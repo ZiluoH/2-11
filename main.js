@@ -9,7 +9,7 @@ class Board {
         this.gameOver = false;
         this.totalScore = 0;
         this.currentScore = 0;
-        this.highestScore = 0;
+        this.highestScore = localStorage.getItem("highestScore") || 0;
     }
     
     initialBoard(){
@@ -126,6 +126,10 @@ class Board {
                     this.board[i][j] = this.board[i][j] * 2;
                     // update score for each move
                     this.totalScore += this.board[i][j];
+                    if(this.totalScore > this.highestScore){
+                        this.highestScore = this.totalScore;
+                        localStorage.setItem("highestScore", this.highestScore);
+                    }
                     this.currentScore += this.board[i][j];
                     this.board[i][j - 1] = 0;
                 }
@@ -218,6 +222,10 @@ function rerenderBoard(){
             }
         }
     }
+
+    // update score-board
+    document.getElementById('score').innerHTML = board.totalScore;
+    document.getElementById('highest').innerHTML = board.highestScore;
 }
 
 
