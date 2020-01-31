@@ -30,7 +30,7 @@ body{
 }
 
 .title {
-  font-size: 40px;
+  font-size: 50px;
   color: #fff;
   text-align: center;
   animation: glowText 1s ease-in-out infinite alternate;
