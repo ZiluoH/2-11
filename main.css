@@ -39,15 +39,15 @@ body{
 
 #board{
   grid-area: 2 / 3 / 6 / 7;
-    display: grid;
-    grid-template-columns:  90px 90px 90px 90px;
-    grid-template-rows:  90px 90px 90px 90px auto;
-    grid-gap: 15px;
-    padding: 20px;
-    width: 405px;
-    border-radius: 5px;
-    background-color: #152b7d;
-    margin: auto;
+  display: grid;
+  grid-template-columns:  90px 90px 90px 90px;
+  grid-template-rows:  90px 90px 90px 90px auto;
+  grid-gap: 15px;
+  padding: 20px;
+  width: 405px;
+  border-radius: 5px;
+  background-color: #152b7d;
+  margin: auto;
 }
 
 
@@ -55,10 +55,17 @@ body{
   grid-area: 2 / 1 / 6 / 3;
 }
 
+#instruction p{
+  font-family: monospace;
+  color: #39ff14;
+  font-size: 24px;
+}
+
 #score-board{
   font-family: digital;
   color: #fff;
   grid-area: 2 / 7 / 6 / 8;
+  font-size: 30px;
 }
 
 .block{
