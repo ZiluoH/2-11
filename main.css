@@ -61,6 +61,18 @@ body{
   font-size: 24px;
 }
 
+#instruction .restart{
+  color: #39ff14;
+  font-size: 35px;
+  position: relative;
+  top: 3px;
+}
+
+#instruction .restart:hover{
+  cursor: pointer;
+  animation: spin 2s linear infinite;
+}
+
 #score-board{
   font-family: digital;
   color: #fff;
@@ -222,4 +234,13 @@ body{
   to {
     text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
   }
+}
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
 }

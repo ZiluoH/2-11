@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="./main.css">
     <script src="./main.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">
 </head>
 <body>
     <div class="main">
@@ -17,9 +16,12 @@
             <h1 class="title">2<sup>11</sup></h1>
         </div>
         <div id="board">
+            
         </div>
         <div id="instruction">
             <p>Use your arrow keys to move blocks. When 2 blocks with the same number touch, they merge into one!</p>
+            <p>Or you can press this <i class="fas fa-redo-alt restart" onclick="board.restart();"></i> to reset the game.</p>
+            
         </div>
         <div id="score-board">
             <div>Score: <br><span id="score"></span></div>
