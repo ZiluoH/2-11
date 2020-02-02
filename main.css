@@ -41,13 +41,14 @@ body{
   grid-area: 2 / 3 / 6 / 7;
   display: grid;
   grid-template-columns:  90px 90px 90px 90px;
-  grid-template-rows:  90px 90px 90px 90px auto;
+  grid-template-rows:  90px 90px 90px 90px;
   grid-gap: 15px;
   padding: 20px;
   width: 405px;
   border-radius: 5px;
   background-color: #152b7d;
   margin: auto;
+  overflow:hidden;
 }
 
 
@@ -153,6 +154,16 @@ body{
     animation: pulse 2s infinite;
 }
 
+#game-over{
+  display: block;
+  position: absolute;
+  width: 445px;
+  height: 445px;
+  transform: translate(-20px, -20px);
+  z-index: 3;
+  color: white;
+  background: rgba(0, 0, 0, 0.8)
+}
 
 
 /* --------------------------------------------------------------- */
