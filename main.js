@@ -60,17 +60,8 @@ class Board {
         this.generateBlock();
         this.generateBlock();
         rerenderBoard();
+        document.getElementById('game-over').setAttribute("style", "display: none;");
     }
-
-    // test need to remove
-    test(){
-        this.board = [[0, 2, 4, 8],
-        [16, 32, 64, 128],
-        [256, 512, 1024, 2048],
-        [16, 0, 32, 0]];
-        rerenderBoard();
-    }
-
 
     //generate block at random empty spot
     generateBlock(){
@@ -92,7 +83,9 @@ class Board {
         
         if (!this.availableSpace() && !this.availableMatch()){
             this.gameOver = true;
-            console.log("game over");
+            if(this.gameOver){
+                document.getElementById('game-over').setAttribute("style", "display: block;");
+            }
         };
         
     }
@@ -238,5 +231,5 @@ window.addEventListener('DOMContentLoaded', () => {
     board.initialBoard();
 })
 
-window.board = board;
+// window.board = board;
 
