@@ -172,8 +172,6 @@ class Board {
 
 }
 
-
-
 // ---------------Move ---------------------- //
 window.addEventListener('keydown', function(e) {
     switch (e.keyCode) {
@@ -197,9 +195,6 @@ window.addEventListener('keydown', function(e) {
 
 });
 
-
-
-
 // ---------------- rerender board -------------- //
 function rerenderBoard(){
     for (let i = 0; i < 4; i++) {
@@ -221,15 +216,8 @@ function rerenderBoard(){
     document.getElementById('highest').innerHTML = board.highestScore;
 }
 
-
-
-
-
-
 let board = new Board();
 window.addEventListener('DOMContentLoaded', () => {
     board.initialBoard();
 })
-
-// window.board = board;
 
