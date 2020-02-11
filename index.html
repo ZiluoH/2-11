@@ -29,7 +29,9 @@
         </div>
         <div id="instruction">
             <p>Use your arrow keys to move blocks. When 2 blocks with the same number touch, they merge into one!</p>
-            <p>Or you can press this <i class="fas fa-redo-alt restart" onclick="board.restart();"></i> to reset the game.</p>
+            <br>
+            <p>You can click this <i class="fas fa-backspace" onclick="board.undo()"></i> or backspace to undo one move.</p>
+            <p>Or you can press this <i class="fas fa-redo-alt restart" onclick="board.restart()"></i> to reset the game.</p>
             
         </div>
         <div id="score-board">

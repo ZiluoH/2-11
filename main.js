@@ -5,8 +5,10 @@ class Board {
                       [0, 0, 0, 0],
                       [0, 0, 0, 0],
                       [0, 0, 0, 0]];
+        this.preBoard = this.board;
         this.moved = false;
         this.gameOver = false;
+        this.undoed = false;
         this.totalScore = 0;
         this.currentScore = 0;
         this.highestScore = localStorage.getItem("highestScore") || 0;
@@ -53,6 +55,7 @@ class Board {
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0]];
+        this.preBoard = this.board;
         this.moved = false;
         this.gameOver = false;
         this.totalScore = 0;
@@ -136,6 +139,7 @@ class Board {
             if (JSON.stringify(originRow)!= JSON.stringify(this.board[i]) ){
                 this.moved = true
             }
+            
         }
 
         if(this.moved){
@@ -144,12 +148,17 @@ class Board {
             this.currentScore = 0;
             // reset moved
             this.moved = false;
+            this.undoed = false;
         }
     }
 
     // helper function rotate the board
     rotateBoard(){//rotate board conter clockwise
         this.board = this.board.map((col, i) => this.board.map(row => row[3 - i]));
+    }
+
+    keyRight(){
+        this.mergeRight();
     }
 
     keyLeft(){
@@ -170,26 +179,50 @@ class Board {
         this.rotateBoard();this.rotateBoard();this.rotateBoard();
     }
 
+    // undo
+    undo(){
+        if(!this.undoed){
+            this.undoed = true;
+            this.board = this.preBoard;
+            rerenderBoard();
+        }
+    }
 }
 
 // ---------------Move ---------------------- //
 window.addEventListener('keydown', function(e) {
+    const tempBoard = board.board.slice();
     switch (e.keyCode) {
         case 39: //arrow right
-            board.mergeRight();
+            board.keyRight();
+            if (JSON.stringify(tempBoard) != JSON.stringify(board.board)) {
+                board.preBoard = tempBoard;
+            }
             rerenderBoard();
             break;
         case 37: //arrow left
             board.keyLeft();
+            if (JSON.stringify(tempBoard) != JSON.stringify(board.board)) {
+              board.preBoard = tempBoard;
+            }           
             rerenderBoard();
             break;
         case 38: //arrow up
             board.keyUp();
+            if (JSON.stringify(tempBoard) != JSON.stringify(board.board)) {
+              board.preBoard = tempBoard;
+            }
             rerenderBoard();
             break;
         case 40: //arrow down
             board.keyDown();
+            if (JSON.stringify(tempBoard) != JSON.stringify(board.board)) {
+              board.preBoard = tempBoard;
+            }
             rerenderBoard();
+            break;
+        case 8:
+            board.undo();
             break;
     }
 
@@ -209,7 +242,7 @@ function rerenderBoard(){
                 block.className = `block block-${val}`;
             }
         }
-    }
+    }    
 
     // update score-board
     document.getElementById('score').innerHTML = board.totalScore;
@@ -220,4 +253,6 @@ let board = new Board();
 window.addEventListener('DOMContentLoaded', () => {
     board.initialBoard();
 })
+
+window.board = board;
 
