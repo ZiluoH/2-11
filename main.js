@@ -197,29 +197,29 @@ window.addEventListener('keydown', function(e) {
             board.keyRight();
             if (JSON.stringify(tempBoard) != JSON.stringify(board.board)) {
                 board.preBoard = tempBoard;
+                rerenderBoard();
             }
-            rerenderBoard();
             break;
         case 37: //arrow left
             board.keyLeft();
             if (JSON.stringify(tempBoard) != JSON.stringify(board.board)) {
               board.preBoard = tempBoard;
+              rerenderBoard();
             }           
-            rerenderBoard();
             break;
         case 38: //arrow up
             board.keyUp();
             if (JSON.stringify(tempBoard) != JSON.stringify(board.board)) {
               board.preBoard = tempBoard;
+              rerenderBoard();
             }
-            rerenderBoard();
             break;
         case 40: //arrow down
             board.keyDown();
             if (JSON.stringify(tempBoard) != JSON.stringify(board.board)) {
               board.preBoard = tempBoard;
+              rerenderBoard();
             }
-            rerenderBoard();
             break;
         case 8:
             board.undo();
@@ -229,7 +229,7 @@ window.addEventListener('keydown', function(e) {
 });
 
 // ---------------- rerender board -------------- //
-function rerenderBoard(){
+function rerenderBoard(){  
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             let block = document.getElementById(i.toString() + j.toString());
@@ -240,7 +240,7 @@ function rerenderBoard(){
             } else {
                 block.innerHTML = val;
                 block.className = `block block-${val}`;
-            }
+            } 
         }
     }    
 
