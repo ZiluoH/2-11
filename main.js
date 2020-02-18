@@ -239,7 +239,7 @@ function rerenderBoard(){
                 block.className = 'block block-0';
             } else {
                 block.innerHTML = val;
-                block.className = `block block-${val}`;
+                block.className = `block block-${val} bounceIn`;
             } 
         }
     }    

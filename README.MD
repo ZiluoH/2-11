@@ -1,6 +1,6 @@
 # README
 ## 2-11
-[Live Site](https://ziluoh.github.io/portfolio/Game-2-11/index.html)
+[Live Site](https://ziluoh.github.io/2-11/)
 ![Screenshot](https://github.com/ZiluoH/2-11/blob/master/img/screencapture.png)
 
 ## About
